@@ -5582,11 +5582,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "h:\\Projects\\GitHub\\Repo\\AzrueLearning\\AzureLearning-module\\AzureLearning-module.csproj",
+      "projectUniqueName": "H:\\Projects\\GitHub\\Repo\\AzrueLearning\\AzureLearning-module\\AzureLearning-module.csproj",
       "projectName": "AzureLearning-module",
-      "projectPath": "h:\\Projects\\GitHub\\Repo\\AzrueLearning\\AzureLearning-module\\AzureLearning-module.csproj",
+      "projectPath": "H:\\Projects\\GitHub\\Repo\\AzrueLearning\\AzureLearning-module\\AzureLearning-module.csproj",
       "packagesPath": "C:\\Users\\nitinj\\.nuget\\packages\\",
-      "outputPath": "h:\\Projects\\GitHub\\Repo\\AzrueLearning\\AzureLearning-module\\obj\\",
+      "outputPath": "H:\\Projects\\GitHub\\Repo\\AzrueLearning\\AzureLearning-module\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
