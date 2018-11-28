@@ -123,6 +123,10 @@ namespace AzureLearning_module
             await this.ReadUserDocument("Users", "WebCustomers", yanhe);
 
             await this.DeleteUserDocument("Users", "WebCustomers", yanhe);
+
+            await this.RunStoredProcedure("Users", "WebCustomers", yanhe);
+
+            this.ExecuteSimpleQuery("Users", "WebCustomers");
         }
 
         public class User
@@ -258,6 +262,44 @@ namespace AzureLearning_module
                     throw;
                 }
             }
+        }
+
+        private void ExecuteSimpleQuery(string databaseName, string collectionName)
+        {
+            // Set some common query options
+            FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1, EnableCrossPartitionQuery = true };
+
+            // Here we find nelapin via their LastName
+            IQueryable<User> userQuery = this.client.CreateDocumentQuery<User>(
+                    UriFactory.CreateDocumentCollectionUri(databaseName, collectionName), queryOptions)
+                    .Where(u => u.LastName == "Pindakova");
+
+            // The query is executed synchronously here, but can also be executed asynchronously via the IDocumentQuery<T> interface
+            Console.WriteLine("Running LINQ query...");
+            foreach (User user in userQuery)
+            {
+                Console.WriteLine("\tRead {0}", user);
+            }
+
+            // Now execute the same query via direct SQL
+            IQueryable<User> userQueryInSql = this.client.CreateDocumentQuery<User>(
+                    UriFactory.CreateDocumentCollectionUri(databaseName, collectionName),
+                    "SELECT * FROM User WHERE User.lastName = 'Pindakova'", queryOptions);
+
+            Console.WriteLine("Running direct SQL query...");
+            foreach (User user in userQueryInSql)
+            {
+                Console.WriteLine("\tRead {0}", user);
+            }
+
+            Console.WriteLine("Press any key to continue ...");
+            Console.ReadKey();
+        }
+
+        public async Task RunStoredProcedure(string databaseName, string collectionName, User user)
+        {
+            await client.ExecuteStoredProcedureAsync<string>(UriFactory.CreateStoredProcedureUri(databaseName, collectionName, "UpdateOrderTotal"), new RequestOptions { PartitionKey = new PartitionKey(user.UserId) });
+            Console.WriteLine("Stored procedure complete");
         }
     }
 }
